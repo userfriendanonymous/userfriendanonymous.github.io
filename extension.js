@@ -1,5 +1,21 @@
+
+
+const crazysdk = window.CrazyGames.CrazySDK.getInstance();
+crazysdk.init();
+
 class CrazyGamesAds {
-    constructor() { }
+    constructor() {
+        this.status = false;
+        crazysdk.addEventListener('adStarted', () => {
+            this.status = true;
+        });
+        crazysdk.addEventListener('adFinished', () => {
+            this.status = false;
+        });
+        crazysdk.addEventListener('adError', () => {
+            this.status = false;
+        });
+    }
     getInfo() {
         return {
             id: 'crazygamesads',
@@ -12,11 +28,34 @@ class CrazyGamesAds {
                     opcode: 'requestad',
                     blockType: Scratch.BlockType.COMMAND,
                     text: 'request ad'
+                }, {
+                    opcode: 'addisplayed',
+                    blockType: Scratch.BlockType.REPORTER,
+                    text: 'ad displayed?'
+                }, {
+                    opcode: 'adevent',
+                    blockType: Scratch.BlockType.HAT,
+                    text: 'on ad [event]',
+                    arguments: {
+                        event: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'event'
+                        }
+                    }
                 }
-            ]
+            ],
+            menus: {
+                event: {
+                    items: ['start', 'end', 'error']
+                }
+            }
         };
     }
     requestad() {
+        crazysdk.requestAd();
+    }
+    addisplayed() {
+        crazysdk.requestAd();
     }
 }
 Scratch.extensions.register(new CrazyGamesAds());
