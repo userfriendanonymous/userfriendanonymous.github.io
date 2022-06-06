@@ -19,9 +19,9 @@ class CrazyGamesAds {
                 }, {
                     opcode: 'adevent',
                     blockType: Scratch.BlockType.HAT,
-                    text: 'on ad [event]',
+                    text: 'on ad [EVENT]',
                     arguments: {
-                        event: {
+                        EVENT: {
                             type: ArgumentType.STRING,
                             menu: 'event',
                             defaultValue: 'start'
