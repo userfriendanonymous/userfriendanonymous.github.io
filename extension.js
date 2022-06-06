@@ -1,20 +1,6 @@
-
-
-const crazysdk = window.CrazyGames.CrazySDK.getInstance();
-crazysdk.init();
-
 class CrazyGamesAds {
     constructor() {
         this.status = false;
-        crazysdk.addEventListener('adStarted', () => {
-            this.status = true;
-        });
-        crazysdk.addEventListener('adFinished', () => {
-            this.status = false;
-        });
-        crazysdk.addEventListener('adError', () => {
-            this.status = false;
-        });
     }
     getInfo() {
         return {
@@ -55,7 +41,10 @@ class CrazyGamesAds {
         crazysdk.requestAd();
     }
     addisplayed() {
-        crazysdk.requestAd();
+        return this.status;
+    }
+    adevent(event) {
+
     }
 }
 Scratch.extensions.register(new CrazyGamesAds());
