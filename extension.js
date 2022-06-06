@@ -19,20 +19,21 @@ class CrazyGamesAds {
                 }, {
                     opcode: 'adevent',
                     blockType: Scratch.BlockType.HAT,
-                    text: 'on ad'
-                    // arguments: {
-                    //     event: {
-                    //         type: ArgumentType.NUMBER,
-                    //         menu: 'event'
-                    //     }
-                    // }
+                    text: 'on ad [event]',
+                    arguments: {
+                        event: {
+                            type: ArgumentType.STRING,
+                            menu: 'event',
+                            defaultValue: 'start'
+                        }
+                    }
                 }
-            ]
-            // menus: {
-            //     event: {
-            //         items: ['start', 'end', 'error']
-            //     }
-            // }
+            ],
+            menus: {
+                event: {
+                    items: ['start', 'end', 'error']
+                }
+            }
         };
     }
     requestad() {
