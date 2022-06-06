@@ -23,16 +23,16 @@ class CrazyGamesAds {
                     arguments: {
                         EVENT: {
                             type: ArgumentType.STRING,
-                            menu: 'event',
+                            // menu: 'event',
                             defaultValue: 'start'
                         }
                     }
                 }
-            ],
-            menus: {
-                event:
-                    ['start', 'end', 'error']
-            }
+            ]
+            // menus: {
+            //     event:
+            //         ['start', 'end', 'error']
+            // }
         };
     }
     requestad() {
