@@ -1,7 +1,5 @@
 class CrazyGamesAds {
-    constructor() {
-        this.status = false;
-    }
+    constructor() { }
     getInfo() {
         return {
             id: 'crazygamesads',
@@ -38,10 +36,9 @@ class CrazyGamesAds {
         };
     }
     requestad() {
-        crazysdk.requestAd();
     }
     addisplayed() {
-        return this.status;
+        return 0;
     }
     adevent(event) {
 
