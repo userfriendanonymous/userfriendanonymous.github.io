@@ -17,16 +17,17 @@ class CrazyGamesAds {
                     blockType: Scratch.BlockType.REPORTER,
                     text: 'ad displayed?'
                 }, {
-                    opcode: 'adevent',
+                    opcode: 'adstart',
                     blockType: Scratch.BlockType.HAT,
-                    text: 'on ad [EVENT]',
-                    arguments: {
-                        EVENT: {
-                            type: ArgumentType.STRING,
-                            // menu: 'event',
-                            defaultValue: 'start'
-                        }
-                    }
+                    text: 'when ad starts',
+                }, {
+                    opcode: 'adend',
+                    blockType: Scratch.BlockType.HAT,
+                    text: 'when ad ends',
+                }, {
+                    opcode: 'aderror',
+                    blockType: Scratch.BlockType.HAT,
+                    text: 'when ad errors',
                 }
             ]
             // menus: {
@@ -40,8 +41,14 @@ class CrazyGamesAds {
     addisplayed() {
         return 0;
     }
-    adevent(event) {
-
+    adstart() {
+        return 0;
+    }
+    adend() {
+        return 0;
+    }
+    aderror() {
+        return 0;
     }
 }
 Scratch.extensions.register(new CrazyGamesAds());
