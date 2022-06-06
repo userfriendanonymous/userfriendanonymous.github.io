@@ -30,9 +30,12 @@ class CrazyGamesAds {
                 }
             ],
             menus: {
-                event: {
-                    items: ['start', 'end', 'error']
-                }
+                event:
+                    [
+                        { text: 'start', value: 'start' },
+                        { text: 'end', value: 'end' },
+                        { text: 'error', value: 'error' }
+                    ]
             }
         };
     }
