@@ -29,7 +29,7 @@ class cursor {
         };
     }
     cursormode(mode) {
-        document.querySelector('canvas').style.cursor = mode;
+        document.querySelector('.stage-wrapper_stage-canvas-wrapper_3ewmd').style.cursor = mode;
     }
 }
 Scratch.extensions.register(new cursor());
