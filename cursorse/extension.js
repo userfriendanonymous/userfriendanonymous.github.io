@@ -29,6 +29,8 @@ class cursor {
         };
     }
     cursormode(mode) {
+        console.log(document);
+        console.log(document.querySelector('.stage-wrapper_stage-canvas-wrapper_3ewmd'));
         document.querySelector('.stage-wrapper_stage-canvas-wrapper_3ewmd').style.cursor = 'pointer';
     }
 }
