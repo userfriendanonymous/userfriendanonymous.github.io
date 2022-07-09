@@ -29,7 +29,7 @@ class cursor {
         };
     }
     cursormode(mode) {
-        document.body.style.cursor = mode;
+        document.queySelector('canvas').style.cursor = mode;
     }
 }
 Scratch.extensions.register(new cursor());
