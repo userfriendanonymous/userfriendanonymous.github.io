@@ -42,10 +42,23 @@ class String {
         };
     }
     findChar({text, string}) {
-        return string.indexOf(text) + 1;
+        try {
+            text = String(text);
+            string = String(string);
+            return string.indexOf(text) + 1;
+        } catch (error) {
+            return '';
+        }
     }
     sliceString({string, a, b}) {
-        return string.slice(a - 1, b > 0 ? b - 1 : string.length);
+        string = String(string);
+        try {
+            a = Number(a);
+            b = Number(b);
+            return string.slice(a - 1, b > 0 ? b - 1 : string.length);
+        } catch (error) {
+            return '';
+        }
     }
 }
 Scratch.extensions.register(new String());
