@@ -1,8 +1,8 @@
-class String {
+class Strings {
     getInfo () {
         return {
-            id: 'string',
-            name: 'String',
+            id: 'strings',
+            name: 'Strings',
             blocks: [
                 {
                     opcode: 'findChar',
@@ -43,16 +43,16 @@ class String {
     }
     findChar({text, string}) {
         try {
-            text = String(text);
-            string = String(string);
+            text = text.toString();
+            string = string.toString();
             return string.indexOf(text) + 1;
         } catch (error) {
             return '';
         }
     }
-    sliceString({string, a, b}) {
-        string = String(string);
+    sliceString({string, a, b}) {   
         try {
+            string = string.toString();
             a = Number(a);
             b = Number(b);
             return string.slice(a - 1, b > 0 ? b - 1 : string.length);
@@ -61,4 +61,4 @@ class String {
         }
     }
 }
-Scratch.extensions.register(new String());
+Scratch.extensions.register(new Strings());
