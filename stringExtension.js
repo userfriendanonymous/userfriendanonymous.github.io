@@ -48,3 +48,4 @@ class String {
         return string.slice(a - 1, b > 0 ? b - 1 : string.length);
     }
 }
+Scratch.extensions.register(new String());
