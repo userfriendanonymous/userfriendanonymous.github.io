@@ -5,7 +5,7 @@ class Strings {
             name: 'Strings',
             blocks: [
                 {
-                    opcode: 'findChar',
+                    opcode: 'find',
                     blockType: 'reporter',
                     text: 'find [text] in [string]',
                     arguments: {
@@ -41,7 +41,7 @@ class Strings {
             ]
         };
     }
-    findChar({text, string}) {
+    find({text, string}) {
         try {
             text = text.toString();
             string = string.toString();
