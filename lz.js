@@ -14,7 +14,7 @@ class Game {
 
     constructor() {
         this.name = 'player' + String(Math.round(Math.random()*8999) + 1000);
-        this.serverUrl = 'https://LifeZone.07nasp.repl.co';
+        this.serverUrl = 'wss://LifeZone.07nasp.repl.co';
         this.reset();
     }
     getInfo () {
@@ -125,7 +125,7 @@ class Game {
                 },
                 {
                     opcode: 'openBuff',
-                    blockType: 'boolean',
+                    blockType: 'Boolean',
                     text: 'open buff [id]',
                     arguments: {
                         'id': {
@@ -142,13 +142,13 @@ class Game {
                 },
                 {
                     opcode: 'connected',
-                    blockType: 'boolean',
+                    blockType: 'Boolean',
                     text: 'connected?',
                     arguments: {}
                 },
                 {
                     opcode: 'host',
-                    blockType: 'boolean',
+                    blockType: 'Boolean',
                     text: 'host?',
                     arguments: {}
                 },
@@ -209,20 +209,20 @@ class Game {
         this.world.clear();
     }
     join() {
-        socket.send({'s':'room', 'name':this.name});
+        this.socket.send({'s':'room', 'name':this.name});
     }
     send() {
-        socket.send({'s':'accept', 'buff':this.buff})
+        this.socket.send({'s':'accept', 'buff':this.buff})
         this.buff = []
     }
     addBuff({data}) {
-        this.buff[this.buff.length - 1].append(data)
+        this.buff[this.buff.length - 1].push(data)
     }
     newBuff() {
-        this.buff.append([])
+        this.buff.push([])
     }
     openBuff({id}) {
-        buff = this.players[id]['buff']
+        let buff = this.players[id]['buff']
         if (buff.length > 0) {
             this.openBuff = buff[0]
             delete this.players[id]['buff'][0]
@@ -232,7 +232,7 @@ class Game {
         }
     }
     nextBuff() {
-        val = this.openBuff[0]
+        let val = this.openBuff[0]
         delete this.openBuff[0]
     }
     connected() {
@@ -251,8 +251,8 @@ class Game {
             this.connected = true;
         }
         this.socket.onmessage = event => {
-            data = event.data;
-            s = data['s'];
+            let data = event.data;
+            let s = data['s'];
             this.status = s;
 
             if (s == 'room'){
