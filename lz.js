@@ -1,33 +1,4 @@
 class Game {
-    constructor() {
-        this.name = 'player';
-        this.serverUrl = 'https://LifeZone.07nasp.repl.co';
-        this.reset();
-        this.socket.onopen = event => {
-            this.connected = true;
-        }
-        this.socket.onmessage = event => {
-            data = event.data;
-            s = data['s'];
-            this.status = s;
-
-            if (s == 'room'){
-                this.room = data['room']
-
-            } else if (s == 'world'){
-                this.world = data['world']
-
-            } else if (s == 'host'){
-                this.host = true
-
-            } else if (s == 'getWorld'){
-                this.socket.send({'s':'world', 'world':this.world})
-
-            } else if (s == 'accept'){
-                this.players[data['id']] = {'name':data['name'], 'buff':data['buff']}
-            }
-        }
-    }
     reset() {
         this.connected = false;
         this.buff = [];
@@ -39,6 +10,12 @@ class Game {
         this.cell = 0;
         this.cellData = 0;
         this.status = '';
+    }
+
+    constructor() {
+        this.name = 'player' + String(Math.round(Math.random()*8999) + 1000);
+        this.serverUrl = 'https://LifeZone.07nasp.repl.co';
+        this.reset();
     }
     getInfo () {
         return {
@@ -87,7 +64,7 @@ class Game {
                     arguments: {
                         'id': {
                             type: 'number',
-                            defaultValue: 0
+                            defaultValue: '0'
                         }
                     }
                 },
@@ -98,7 +75,7 @@ class Game {
                     arguments: {
                         'tile': {
                             type: 'number',
-                            defaultValue: 0
+                            defaultValue: '0'
                         }
                     }
                 },
@@ -132,7 +109,7 @@ class Game {
                     arguments: {
                         'tile': {
                             type: 'number',
-                            defaultValue: 0
+                            defaultValue: '0'
                         },
                         'parameter': {
                             type: 'string',
@@ -153,7 +130,7 @@ class Game {
                     arguments: {
                         'id': {
                             type: 'number',
-                            defaultValue: 0
+                            defaultValue: '0'
                         }
                     }
                 },
@@ -187,6 +164,23 @@ class Game {
                     text: 'status',
                     arguments: {}
                 },
+                {
+                    opcode: 'name',
+                    blockType: 'reporter',
+                    text: 'name',
+                    arguments: {}
+                },
+                {
+                    opcode: 'changeName',
+                    blockType: 'command',
+                    text: 'change name [name]',
+                    arguments: {
+                        'name': {
+                            type: 'string',
+                            defaultValue: 'name'
+                        }
+                    }
+                },
             ]
         };
     }
@@ -194,10 +188,10 @@ class Game {
         this.cell = id - 1;
         this.cellData = this.world[id];
     }
-    cellTile({}) {
+    cellTile() {
         return this.cellData[0];
     }
-    cellParameter({}) {
+    cellParameter() {
         return this.cellData[1];
     }
     setCellTile({id}) {
@@ -211,20 +205,20 @@ class Game {
     addCell({tile, parameter}) {
         this.world.append([tile, parameter]);
     }
-    clearWorld({}) {
+    clearWorld() {
         this.world.clear();
     }
-    join({}) {
+    join() {
         socket.send({'s':'room', 'name':this.name});
     }
-    send({}) {
+    send() {
         socket.send({'s':'accept', 'buff':this.buff})
         this.buff = []
     }
     addBuff({data}) {
         this.buff[this.buff.length - 1].append(data)
     }
-    newBuff({}) {
+    newBuff() {
         this.buff.append([])
     }
     openBuff({id}) {
@@ -237,25 +231,55 @@ class Game {
             return false
         }
     }
-    nextBuff({}) {
+    nextBuff() {
         val = this.openBuff[0]
         delete this.openBuff[0]
     }
-    connected({}) {
+    connected() {
         return this.connected
     }
-    host({}) {
+    host() {
         return this.host
     }
-    leave({}) {
+    leave() {
         this.socket.close()
         this.reset()
     }
-    connect({}) {
+    connect() {
         this.socket = new WebSocket(this.serverUrl)
+        this.socket.onopen = event => {
+            this.connected = true;
+        }
+        this.socket.onmessage = event => {
+            data = event.data;
+            s = data['s'];
+            this.status = s;
+
+            if (s == 'room'){
+                this.room = data['room']
+
+            } else if (s == 'world'){
+                this.world = data['world']
+
+            } else if (s == 'host'){
+                this.host = true
+
+            } else if (s == 'getWorld'){
+                this.socket.send({'s':'world', 'world':this.world})
+
+            } else if (s == 'accept'){
+                this.players[data['id']] = {'name':data['name'], 'buff':data['buff']}
+            }
+        }
     }
-    status({}) {
+    status() {
         return this.status
+    }
+    name() {
+        return this.name
+    }
+    changeName({name}) {
+        this.name = name
     }
 }
 Scratch.extensions.register(new Game());
