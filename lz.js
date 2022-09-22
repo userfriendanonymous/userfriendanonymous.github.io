@@ -58,7 +58,7 @@ class Game {
                     arguments: {}
                 },
                 {
-                    opcode: 'cell',
+                    opcode: 'inspectCell',
                     blockType: 'command',
                     text: 'cell [id]',
                     arguments: {
@@ -124,7 +124,7 @@ class Game {
                     arguments: {}
                 },
                 {
-                    opcode: 'openBuff',
+                    opcode: 'openPlayerBuff',
                     blockType: 'Boolean',
                     text: 'open buff [id]',
                     arguments: {
@@ -141,13 +141,13 @@ class Game {
                     arguments: {}
                 },
                 {
-                    opcode: 'connected',
+                    opcode: 'isConnected',
                     blockType: 'Boolean',
                     text: 'connected?',
                     arguments: {}
                 },
                 {
-                    opcode: 'host',
+                    opcode: 'isHost',
                     blockType: 'Boolean',
                     text: 'host?',
                     arguments: {}
@@ -159,15 +159,15 @@ class Game {
                     arguments: {}
                 },
                 {
-                    opcode: 'status',
+                    opcode: 'getStatus',
                     blockType: 'reporter',
-                    text: 'status',
+                    text: 'status?',
                     arguments: {}
                 },
                 {
-                    opcode: 'name',
+                    opcode: 'getName',
                     blockType: 'reporter',
-                    text: 'name',
+                    text: 'name?',
                     arguments: {}
                 },
                 {
@@ -184,7 +184,7 @@ class Game {
             ]
         };
     }
-    cell({id}) {
+    inspectCell({id}) {
         this.cell = id - 1;
         this.cellData = this.world[id];
     }
@@ -203,10 +203,10 @@ class Game {
         this.world[this.cell][1] = value;
     }
     addCell({tile, parameter}) {
-        this.world.append([tile, parameter]);
+        this.world.push([tile, parameter]);
     }
     clearWorld() {
-        this.world.clear();
+        this.world = [];
     }
     join() {
         this.socket.send({'s':'room', 'name':this.name});
@@ -221,7 +221,7 @@ class Game {
     newBuff() {
         this.buff.push([])
     }
-    openBuff({id}) {
+    openPlayerBuff({id}) {
         let buff = this.players[id]['buff']
         if (buff.length > 0) {
             this.openBuff = buff[0]
@@ -235,11 +235,11 @@ class Game {
         let val = this.openBuff[0]
         delete this.openBuff[0]
     }
-    connected() {
-        return this.connected
+    isConnected() {
+        return String(this.connected)
     }
-    host() {
-        return this.host
+    isHost() {
+        return String(this.host)
     }
     leave() {
         this.socket.close()
@@ -272,10 +272,10 @@ class Game {
             }
         }
     }
-    status() {
+    getStatus() {
         return this.status
     }
-    name() {
+    getName() {
         return this.name
     }
     changeName({name}) {
