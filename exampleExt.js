@@ -10,7 +10,7 @@ class Game {
             name: 'Game',
             blocks: [
                 {
-                    'opcode': 'host',
+                    'opcode': 'setHost',
                     'blockType': 'Boolean',
                     'text': 'host [h]',
                     'arguments': {
@@ -21,7 +21,7 @@ class Game {
                     }
                 },
                 {
-                    opcode: 'status',
+                    opcode: 'setStatus',
                     blockType: 'reporter',
                     text: 'status?',
                     arguments: {}
@@ -30,11 +30,11 @@ class Game {
         };
     }
     
-    host({h}) {
+    setHost({h}) {
         console.log(this)
         return 'f'
     }
-    status() {
+    setStatus() {
         return this.status
     }
 }
