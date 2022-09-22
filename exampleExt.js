@@ -9,10 +9,15 @@ class Game {
             name: 'Game',
             blocks: [
                 {
-                    opcode: 'host',
-                    blockType: 'Boolean',
-                    text: 'host?',
-                    arguments: {}
+                    'opcode': 'host',
+                    'blockType': 'Boolean',
+                    'text': 'host [h]',
+                    'arguments': {
+                        'h':{
+                            type:'string',
+                            defaultValue:'7'
+                        }
+                    }
                 },
                 {
                     opcode: 'status',
@@ -24,7 +29,7 @@ class Game {
         };
     }
     
-    host() {
+    host({h}) {
         return this.host
     }
     status() {
