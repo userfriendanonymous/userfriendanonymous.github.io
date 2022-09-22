@@ -2,6 +2,7 @@ class Game {
     constructor() {
         this.host = false;
         this.status = 'status'
+        console.log(this)
     }
     getInfo () {
         return {
