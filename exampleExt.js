@@ -30,7 +30,7 @@ class Game {
     }
     
     host({h}) {
-        return this.host
+        return 'f'
     }
     status() {
         return this.status
