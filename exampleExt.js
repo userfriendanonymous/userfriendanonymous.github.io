@@ -30,6 +30,7 @@ class Game {
     }
     
     host({h}) {
+        console.log(this)
         return 'f'
     }
     status() {
