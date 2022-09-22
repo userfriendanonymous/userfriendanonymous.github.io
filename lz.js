@@ -143,13 +143,13 @@ class Game {
                 {
                     opcode: 'isConnected',
                     blockType: 'Boolean',
-                    text: 'connected?',
+                    text: 'connected',
                     arguments: {}
                 },
                 {
                     opcode: 'isHost',
                     blockType: 'Boolean',
-                    text: 'host?',
+                    text: 'host',
                     arguments: {}
                 },
                 {
@@ -161,13 +161,13 @@ class Game {
                 {
                     opcode: 'getStatus',
                     blockType: 'reporter',
-                    text: 'status?',
+                    text: 'status',
                     arguments: {}
                 },
                 {
                     opcode: 'getName',
                     blockType: 'reporter',
-                    text: 'name?',
+                    text: 'name',
                     arguments: {}
                 },
                 {
@@ -181,8 +181,17 @@ class Game {
                         }
                     }
                 },
+                {
+                    opcode: 'getName',
+                    blockType: 'reporter',
+                    text: 'name',
+                    arguments: {}
+                },
             ]
         };
+    }
+    socketSend(obj){
+        this.socket.send(JSON.stringify(obj))
     }
     inspectCell({id}) {
         this.cell = id - 1;
@@ -209,10 +218,10 @@ class Game {
         this.world = [];
     }
     join() {
-        this.socket.send({'s':'room', 'name':this.name});
+        this.socketSend({'s':'room', 'name':this.name})
     }
     send() {
-        this.socket.send({'s':'accept', 'buff':this.buff})
+        this.socketSend({'s':'accept', 'buff':this.buff})
         this.buff = []
     }
     addBuff({data}) {
@@ -247,11 +256,11 @@ class Game {
     }
     connect() {
         this.socket = new WebSocket(this.serverUrl)
-        this.socket.onopen = event => {
+        this.socket.onopen = () => {
             this.connected = true;
         }
         this.socket.onmessage = event => {
-            let data = event.data;
+            let data = JSON.parse(event.data);
             let s = data['s'];
             this.status = s;
 
@@ -265,7 +274,7 @@ class Game {
                 this.host = true
 
             } else if (s == 'getWorld'){
-                this.socket.send({'s':'world', 'world':this.world})
+                this.socketSend({'s':'world', 'world':this.world})
 
             } else if (s == 'accept'){
                 this.players[data['id']] = {'name':data['name'], 'buff':data['buff']}
