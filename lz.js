@@ -59,7 +59,7 @@ class Game {
                 },
                 {
                     opcode: 'inspectCell',
-                    blockType: 'command',
+                    blockType: 'Boolean',
                     text: 'cell [id]',
                     arguments: {
                         'id': {
@@ -182,9 +182,9 @@ class Game {
                     }
                 },
                 {
-                    opcode: 'getName',
+                    opcode: 'cellExists',
                     blockType: 'reporter',
-                    text: 'name',
+                    text: 'cell exists',
                     arguments: {}
                 },
             ]
@@ -195,7 +195,12 @@ class Game {
     }
     inspectCell({id}) {
         this.cell = id - 1;
-        this.cellData = this.world[id];
+        if (this.cell in this.world){
+            this.cellData = this.world[this.cell];
+            return true
+        } else {
+            return false
+        }
     }
     cellTile() {
         return this.cellData[0];
