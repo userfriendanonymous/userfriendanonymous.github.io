@@ -188,9 +188,9 @@ class Game {
                     arguments: {}
                 },
                 {
-                    opcode: 'isPlayerOn [id]',
+                    opcode: 'isPlayerOn',
                     blockType: 'reporter',
-                    text: 'cell exists',
+                    text: 'is player on [id]',
                     arguments: {
                         id: {
                             type: 'number',
