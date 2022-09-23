@@ -4,7 +4,7 @@ class Game {
         this.buff = [];
         this.world = [];
         this.host = false;
-        this.players = 0;
+        this.players = [];
         this.openBuff = [];
         this.socket = 0;
         this.cell = 0;
