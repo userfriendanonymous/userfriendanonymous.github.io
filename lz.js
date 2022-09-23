@@ -64,7 +64,7 @@ class Game {
                     arguments: {
                         'id': {
                             type: 'number',
-                            defaultValue: '0'
+                            defaultValue: '1'
                         }
                     }
                 },
@@ -187,6 +187,17 @@ class Game {
                     text: 'cell exists',
                     arguments: {}
                 },
+                {
+                    opcode: 'isPlayerOn [id]',
+                    blockType: 'reporter',
+                    text: 'cell exists',
+                    arguments: {
+                        id: {
+                            type: 'number',
+                            defaultValue: '0'
+                        }
+                    }
+                },
             ]
         };
     }
@@ -235,11 +246,15 @@ class Game {
     newBuff() {
         this.buff.push([])
     }
+    isPlayerOn({id}) {
+        return id in this.players
+    }
     openPlayerBuff({id}) {
+        console.log(this.players)
         let buff = this.players[id]['buff']
         if (buff.length > 0) {
             this.openBuff = buff[0]
-            delete this.players[id]['buff'][0]
+            this.players[id]['buff'].splice(0, 1)
             return true
         } else {
             return false
@@ -247,7 +262,8 @@ class Game {
     }
     nextBuff() {
         let val = this.openBuff[0]
-        delete this.openBuff[0]
+        this.openBuff.splice(0, 1)
+        return val
     }
     isConnected() {
         return String(this.connected)
@@ -266,6 +282,7 @@ class Game {
         }
         this.socket.onmessage = event => {
             let data = JSON.parse(event.data);
+            console.log(data)
             let s = data['s'];
             this.status = s;
 
@@ -283,6 +300,9 @@ class Game {
 
             } else if (s == 'accept'){
                 this.players[data['id']] = {'name':data['name'], 'buff':data['buff']}
+
+            } else if (s == 'left'){
+                delete this.players[data['id']]
             }
         }
     }
