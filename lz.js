@@ -12,7 +12,7 @@ class Game {
         this.status = '';
     }
 
-    constructor() {
+    constructor(runtime) {
         this.name = 'player' + String(Math.round(Math.random()*8999) + 1000);
         this.serverUrl = 'wss://LifeZone.07nasp.repl.co';
         this.reset();
@@ -180,12 +180,6 @@ class Game {
                             defaultValue: 'name'
                         }
                     }
-                },
-                {
-                    opcode: 'cellExists',
-                    blockType: 'reporter',
-                    text: 'cell exists',
-                    arguments: {}
                 },
                 {
                     opcode: 'isPlayerOn',
